@@ -6,15 +6,19 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Makale_BLL
+namespace Makale_dataAccessLayer
 {
-    public class DatabaseContext :DbContext
+    public class DatabaseContext:DbContext
     {
         public DbSet<Kategori> kategoriler { get; set; }
         public DbSet<Kullanici> kullanicilar { get; set; }
         public DbSet<Yorum> yorumlar { get; set; }
         public DbSet<Note> notlar{ get; set; }
         public DbSet<Like> likes { get; set; }
-            
+
+        public DatabaseContext()
+        {
+            Database.SetInitializer(new veriTabaniOlustur());
+        }
     }
 }

@@ -11,7 +11,7 @@ namespace Makale_Entity
     [Table("Notlar")]
     public class Note:EntitiesBase
     {
-          [Required, StringLength(20)]
+          [Required, StringLength(50)]
         public string Baslik { get; set; }
           [Required, StringLength(250)]
         public string Text { get; set; }
@@ -23,5 +23,12 @@ namespace Makale_Entity
          public virtual Kullanici kullanici{ get; set; }
          public virtual List<Yorum> yorumlar{ get; set; }
          public virtual List<Like> like{ get; set; }  //notun birden fazla like ı vardı.bu notu kim likle mış onu öğrenmek için bağladık
+
+        public Note()
+        {
+           yorumlar= new List<Yorum>();
+            like= new List<Like>();
+        }
     }
+
 }

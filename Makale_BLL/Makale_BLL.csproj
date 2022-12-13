@@ -51,14 +51,18 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DatabaseContext.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="test.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Makale_dataAccessLayer\Makale_dataAccessLayer.csproj">
+      <Project>{B50A76CA-1E97-4BAE-BA21-CEE6FF538DC8}</Project>
+      <Name>Makale_dataAccessLayer</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Makale_Entity\Makale_Entity.csproj">
       <Project>{FD4319D1-527F-4391-9A8E-A2A272E16137}</Project>
       <Name>Makale_Entity</Name>

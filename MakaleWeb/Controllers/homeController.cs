@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Makale_BLL;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -11,6 +12,7 @@ namespace MakaleWeb.Controllers
         // GET: home
         public ActionResult Index()
         {
+            test test1= new test();    
             return View();
         }
     }

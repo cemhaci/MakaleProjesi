@@ -11,10 +11,15 @@ namespace Makale_Entity
     [Table("Kategori")]
     public class Kategori:EntitiesBase
     {
-         [Required, StringLength(0)]
-        public string Balik { get; set; }  //bir kategorinin birden fazla notu olucak.her notun da kategoridi plucak
-          [Required, StringLength(150)]
+         [Required, StringLength(50)]
+        public string Baslik { get; set; }  //bir kategorinin birden fazla notu olucak.her notun da kategoridi plucak
+          [Required, StringLength(300)]
         public string Aciklama { get; set; }
       public virtual List<Note> notes { get; set; }
+
+        public Kategori()
+        {
+            notes=new List<Note>(); //bunları örneklememiz lazım çünkü veri tabanı oluştur classımızda kat.notes.Add(not) diye ekleme yaparken içi null atıyor. o yüzden kategorilerde ki notlara bir şey atabilmemiz için bunu örneklememiz gerekiyor
+        }
     }
 }
