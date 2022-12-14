@@ -1,0 +1,14 @@
+﻿@using Makale_BLL  @*web projemiz bll ye erişebiliyor referance sine öyle yazdık*@
+@using Makale_Entity
+@{ 
+    KategoriYonet ky=new KategoriYonet();
+    List<Kategori> kategoriler= ky.listele();
+}
+            <p class="lead">Kategoriler</p>
+            <div class="list-group">
+                <a href="/Home/Index" class="list-group-item"><span class="glyphicon glyphicon-arrow-right"></span>Tümü</a>
+                @foreach (Kategori item in kategoriler)
+                {
+                    <a href="/home/Kategori/@item.ID" class="list-group-item"><span class="glyphicon glyphicon-arrow-right"></span>@item.Baslik</a>
+                }
+            </div>
