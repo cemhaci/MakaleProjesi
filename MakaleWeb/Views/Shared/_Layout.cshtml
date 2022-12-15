@@ -11,19 +11,16 @@
 
     <title>Shop Homepage - Start Bootstrap Template</title>
     <!-- jQuery -->
-      @*hocanın attığı dosyayı layoutumuza yapıştırdık css dosyalarını scriptimize sürükledik sonra scripten layoutumuza yerleştirdik*@
-<link href="~/Content/shop-homepage.css" rel="stylesheet" />
-<link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+    @*hocanın attığı dosyayı layoutumuza yapıştırdık css dosyalarını scriptimize sürükledik sonra scripten layoutumuza yerleştirdik*@
+    <link href="~/Content/shop-homepage.css" rel="stylesheet" />
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
     @*<script src="~/Scripts/bootstrap.min.js"></script>*@
-<script src="~/Scripts/jquery-3.6.1.min.js"></script>
-<script src="~/Scripts/bootstrap.min.js"></script>
+    <script src="~/Scripts/jquery-3.6.1.min.js"></script>
+    <script src="~/Scripts/bootstrap.min.js"></script>
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
 
-
-  
 </head>
-
 <body>
-
     <!-- Navigation -->
     <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
         <div class="container">
@@ -35,7 +32,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="#">Start Bootstrap</a>
+                <a class="navbar-brand" href="/home/ındex">ANASAYFA</a>
             </div>
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
@@ -52,9 +49,9 @@
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
                     <li>
-                        <a href="#"><span class="glyphicon glyphicon-log-in"></span>Giriş</a>
+                        <a href="/home/login"><span class="glyphicon glyphicon-log-in"></span>Giriş</a>
                     </li>
-                    <li><a href="#"><span class="glyphicon glyphicon-user"></span>Üye Ol</a></li>
+                    <li><a href="/home/register"><span class="glyphicon glyphicon-user"></span>Üye Ol</a></li>
                     <li><a href="#"><span class="glyphicon glyphicon-user"></span>cemhaci</a></li>
                     <li><a href="#"><span class="glyphicon glyphicon-log-out"></span>Çıkış</a></li>
                 </ul>
@@ -63,9 +60,9 @@
         </div>
         <!-- /.container -->
     </nav>
+
     @RenderBody()
     <!-- Page Content -->
-
     <!-- /.container -->
 
     <div class="container">
@@ -111,6 +108,7 @@
     </div>
     <!-- /.container -->
     <!-- jQuery -->
+
 
 
 </body>

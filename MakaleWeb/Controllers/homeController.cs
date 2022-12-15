@@ -1,5 +1,6 @@
 ﻿using Makale_BLL;
 using Makale_Entity;
+using Makale_Entity.ViewModel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -41,6 +42,23 @@ namespace MakaleWeb.Controllers
         public ActionResult enbegenilenler()
         {
             return View("Index",ny.listele().OrderByDescending(x=>x.BegeniSayisi).ToList());
+        }
+        public ActionResult about()
+        {
+            return View();
+        }
+        public ActionResult Login()
+        {
+            return View();
+        }
+        [HttpPost]
+         public ActionResult Login(LoginModel model)
+        {
+            return View(model);
+        }
+        public ActionResult Register()
+        {
+            return View();
         }
     }
 }
