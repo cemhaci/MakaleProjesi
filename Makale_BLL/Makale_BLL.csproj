@@ -51,7 +51,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BusinessLayer_Sonuc.cs" />
     <Compile Include="KategoriYonet.cs" />
+    <Compile Include="KullaniciYonet.cs" />
     <Compile Include="NotYonet.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="test.cs" />
@@ -61,6 +63,10 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Makale_Common\Makale_Common.csproj">
+      <Project>{56b4ee7e-7f2c-4f25-9520-91fc555f6e22}</Project>
+      <Name>Makale_Common</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Makale_dataAccessLayer\Makale_dataAccessLayer.csproj">
       <Project>{B50A76CA-1E97-4BAE-BA21-CEE6FF538DC8}</Project>
       <Name>Makale_dataAccessLayer</Name>

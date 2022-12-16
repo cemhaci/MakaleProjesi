@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Makale_Entity;
+using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
@@ -42,6 +43,14 @@ namespace Makale_dataAccessLayer
         public int Insert(T nesne) //int dememizin sebebi sql de 1 row effected diye yazmasından dolayı 1 başarılı ekleme tarzı döndürdüğünden dolayı. biz bunu if ile eklenip eklenmediğini 1 den büyük küçük şeklinde kontrol ettirebiliriz
         {
             _objectset.Add(nesne);  //kullanıcı veya kategori hangi db seti çağırırsak onu ekliycek
+            EntitiesBase obj= nesne as EntitiesBase;
+            DateTime time=DateTime.Now;
+            if(nesne is EntitiesBase)      //bunlarıher insert ettiğimizde eklemek zorundayız çünkü requried bilgi bunlar ve her intert bilgi eklediğimizden sürekli yazmamıza gerek kalmayacak 
+            {
+                obj.KayitTarihi=time;
+                obj.DegistirmeTarihi=time;
+                obj.DegistirenKullanici="system";
+            }
             return db.SaveChanges();
         }
         public int Delete(T nesne)
@@ -49,9 +58,15 @@ namespace Makale_dataAccessLayer
             _objectset.Remove(nesne);
             return db.SaveChanges();
         }
-           public int Update()
+           public int Update(T nesne)
         {
+             EntitiesBase obj= nesne as EntitiesBase;
             //bu metoda gelicek nesne zaten değişceğinden sadece kaydetmemiz yeticektir
+            if(nesne is EntitiesBase)
+            {
+                obj.DegistirmeTarihi=DateTime.Now;
+                obj.DegistirenKullanici="system";
+            }
             return db.SaveChanges();
         }
     }

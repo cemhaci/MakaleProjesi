@@ -36,7 +36,7 @@ namespace Makale_BLL
             if (kullanici != null)
             {
                 kullanici.KullaniciAd="aliyücel34";
-                rep_kul.Update();
+                rep_kul.Update(kullanici);
             }
         }
         public void DeleteTest()
