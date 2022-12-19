@@ -1,0 +1,17 @@
+﻿@model List<string>
+@{
+    ViewBag.Title = "hata";
+}
+
+<h2>useractivate_hata</h2>
+
+<div class="text-danger">
+    @foreach(var item in Model)
+            {
+                <p>
+                    @item
+                </p>
+                <br />
+            }
+</div>
+

@@ -75,10 +75,59 @@ namespace Makale_BLL
             }
             return sonuc;
         }
-            
 
+        public BusinessLayer_Sonuc<Kullanici> ActivateUser(Guid id)
+        {
+            BusinessLayer_Sonuc<Kullanici> sonuc = new BusinessLayer_Sonuc<Kullanici>();
 
+            sonuc.nesne=rep_kul.Find(x=>x.AktifGuid==id);
+            if(sonuc.nesne != null)
+            {
+                if (sonuc.nesne.Aktif)
+                {
+                    sonuc.hatalar.Add("kullanıcı zaten aktif");
+                    return sonuc;
+                }
+                sonuc.nesne.Aktif=true;
+                rep_kul.Update(sonuc.nesne);            }
+            else
+            {
+                sonuc.hatalar.Add("aktifleştirrilecek kullanıcı bulunamadı");
+            }
+            return sonuc;
+        }
+        public BusinessLayer_Sonuc<Kullanici> kullaniciUpdate(Kullanici kul)
+        {
+            BusinessLayer_Sonuc<Kullanici> sonuc=new BusinessLayer_Sonuc<Kullanici>();
+            Kullanici k=rep_kul.Find(x=>x.KullaniciAd==kul.KullaniciAd||x.Email==kul.Email);
 
+            if(k!= null && k.ID != kul.ID)  //database de böyle bir kullanıcı varsa
+            {
+                 if (k.KullaniciAd == kul.KullaniciAd)
+                {
+                    sonuc.hatalar.Add("kullanıcı adı sistemde kayıtlı");  //sonucun hatalarına bunu ekle
+                }
+                if(k.Email == kul.Email)
+                {
+                    sonuc.hatalar.Add("email sistemde kayıtlı");
+                }
+                 return sonuc;
+            }
+            sonuc.nesne=rep_kul.Find(x=>x.ID==kul.ID);
+            sonuc.nesne.Ad=kul.Ad;
+            sonuc.nesne.Email = kul.Email;
+            sonuc.nesne.Soyad=kul.Soyad;
+            sonuc.nesne.KullaniciAd=kul.KullaniciAd;
+            sonuc.nesne.Sifre=kul.Sifre;
+            if(!string.IsNullOrEmpty(kul.profilresim))
+            sonuc.nesne.profilresim=kul.profilresim;
 
+           int updateSonuc= rep_kul.Update(sonuc.nesne);
+            if (updateSonuc < 1)
+            {
+                sonuc.hatalar.Add("profil güncellenemedi");
+            }
+            return sonuc;
+        }
     }
 }

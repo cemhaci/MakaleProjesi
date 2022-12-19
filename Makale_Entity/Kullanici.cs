@@ -16,7 +16,9 @@ namespace Makale_Entity
         public string Ad { get; set; }
          [StringLength(50)]
         public string Soyad { get; set; }
-         [Required, StringLength(50)]
+        [StringLength (50)]
+        public string profilresim { get; set; }
+        [Required, StringLength(50)]
         public string KullaniciAd { get; set; }
           [Required, StringLength(50)]
         public string Email { get; set; }

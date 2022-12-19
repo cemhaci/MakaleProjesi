@@ -113,6 +113,7 @@
     <Content Include="Content\StyleSheetlogin.css" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
+    <Content Include="image\Centaur-icon.png" />
     <Content Include="image\f1 2.jpg" />
     <Content Include="image\f1.jpg" />
     <Content Include="image\nba.jpg" />
@@ -154,6 +155,10 @@
     <Content Include="Views\home\Register.cshtml" />
     <Content Include="Scripts\jquery-1.9.1.min.map" />
     <Content Include="Views\home\useractivate.cshtml" />
+    <Content Include="Views\home\useractivate_hata.cshtml" />
+    <Content Include="Views\home\kayitbasarili.cshtml" />
+    <Content Include="Views\home\profilgoster.cshtml" />
+    <Content Include="Views\home\profildegistir.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
