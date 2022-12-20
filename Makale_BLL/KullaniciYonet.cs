@@ -64,7 +64,7 @@ namespace Makale_BLL
 
             if (sonuc.nesne!= null)
             {
-                if (sonuc.nesne.Aktif)
+                if (!sonuc.nesne.Aktif)
                 {
                     sonuc.hatalar.Add("kullanici aktif değildir.aktivasyon için e postaa adresini kontrol ediniz");
                 }
@@ -89,7 +89,9 @@ namespace Makale_BLL
                     return sonuc;
                 }
                 sonuc.nesne.Aktif=true;
-                rep_kul.Update(sonuc.nesne);            }
+                rep_kul.Update(sonuc.nesne);            
+            }
+
             else
             {
                 sonuc.hatalar.Add("aktifleştirrilecek kullanıcı bulunamadı");
@@ -129,5 +131,24 @@ namespace Makale_BLL
             }
             return sonuc;
         }
-    }
+
+		public BusinessLayer_Sonuc<Kullanici> kullaniciSil(int ıD)
+		{
+			BusinessLayer_Sonuc<Kullanici> sonuc=new BusinessLayer_Sonuc<Kullanici>();
+            sonuc.nesne=rep_kul.Find(x=>x.ID==ıD);
+			if (sonuc.nesne != null)
+			{
+               int silSonuc= rep_kul.Delete(sonuc.nesne);
+                if(silSonuc < 1)
+				{
+                    sonuc.hatalar.Add("kullanıcı silinemedi");
+				}
+			}
+			else
+			{
+                sonuc.hatalar.Add("kullanıcı bulunamadı");
+			}
+            return sonuc;
+		}
+	}
 }

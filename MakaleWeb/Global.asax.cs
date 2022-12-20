@@ -1,3 +1,5 @@
+using Makale_Common;
+using Makale_Entity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,7 +14,7 @@ namespace MakaleWeb
         protected void Application_Start()
         {
             AreaRegistration.RegisterAllAreas();
-            RouteConfig.RegisterRoutes(RouteTable.Routes);
+            RouteConfig.RegisterRoutes(RouteTable.Routes);           
         }
     }
 }

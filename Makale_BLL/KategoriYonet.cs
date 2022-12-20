@@ -19,5 +19,20 @@ namespace Makale_BLL
         {
             return rep_kat.Find(x=>x.ID==id);
         }
-    }
+
+		public void KategoriUpdate(Kategori kategori)
+		{
+			throw new NotImplementedException();
+		}
+
+		public void kategoriSil(Kategori kategori)
+		{
+			throw new NotImplementedException();
+		}
+
+		public void KategoriEkle(Kategori kategori)
+		{
+			throw new NotImplementedException();
+		}
+	}
 }

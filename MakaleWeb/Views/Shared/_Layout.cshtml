@@ -12,13 +12,12 @@
     <title>Shop Homepage - Start Bootstrap Template</title>
     <!-- jQuery -->
     @*hocanın attığı dosyayı layoutumuza yapıştırdık css dosyalarını scriptimize sürükledik sonra scripten layoutumuza yerleştirdik*@
-    <link href="~/Content/shop-homepage.css" rel="stylesheet" />
-    <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
-    @*<script src="~/Scripts/bootstrap.min.js"></script>*@
+
+
     <script src="~/Scripts/jquery-3.6.1.min.js"></script>
     <script src="~/Scripts/bootstrap.min.js"></script>
     <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
-
+    <link href="~/Content/shop-homepage.css" rel="stylesheet" />
 </head>
 <body>
     @{ 
@@ -54,7 +53,27 @@
                     <li>
                         <a href="/home/about"><i class="bi bi-person-check-fill"></i>Hakkımızda</a>
                     </li>
-                </ul>
+
+                    @if (kul != null)
+
+                    {
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Dropdown
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" href="#">Action</a>
+                        <a class="dropdown-item" href="#">Another action</a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="#">Something else here</a>
+                        @if (kul.Admin)
+                        {
+
+                        }
+                    </div>
+                </li>
+                    }                
+               </ul>
                 <ul class="nav navbar-nav navbar-right">
                     @if (kul == null)
                     {
@@ -80,48 +99,8 @@
     @RenderBody()
     <!-- Page Content -->
     <!-- /.container -->
-
-    <div class="container">
-
-        <hr>
-
-        <!-- Footer -->
-        <footer>
-            <div class="row">
-                <div class="col-lg-4">
-                    <h5><b>Site Haritası</b></h5><hr />
-                    <ul>
-                        <li>
-                            <a href="#">Hakkımızda</a>
-                        </li>
-                        <li><a href="#">En Beğenilenler</a></li>
-                        <li><a href="#">Son Yazılanlar</a></li>
-                    </ul>
-
-                </div>
-                <div class="col-lg-4">
-                    <h5><b>Makale Web Projesi</b></h5>
-                    <hr />
-                    <p>@DateTime.Now.Year<br />Tüm Hakları Saklıdır &copy;</p>
-                </div>
-                <div class="col-lg-4 text-center">
-                    @*text center ile ortada yazdırıcaz*@
-                    <h5><b>E-Bülten Üyeliği</b></h5>
-                    <hr />
-                    <div class="col-md-12">
-                        <div class="input-group">
-                            <input type="text" class="form-control" placeholder="e-posta adresiniz">
-                            <span class="input-group-btn">
-                                <button class="btn btn-primary" type="button">Gönder</button>
-                            </span>
-                        </div><!-- /input-group -->
-                    </div><!-- /.col-lg-6 -->
-
-                </div>
-            </div>
-        </footer>
-
-    </div>
+    @RenderSection("footer",false)
+   
     <!-- /.container -->
     <!-- jQuery -->
 

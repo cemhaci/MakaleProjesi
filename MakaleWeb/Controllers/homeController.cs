@@ -1,4 +1,5 @@
 ﻿using Makale_BLL;
+using Makale_Common;
 using Makale_Entity;
 using Makale_Entity.ViewModel;
 using System;
@@ -50,6 +51,7 @@ namespace MakaleWeb.Controllers
         }
         public ActionResult Login()
         {
+
             return View();
         }
         [HttpPost]
@@ -65,6 +67,8 @@ namespace MakaleWeb.Controllers
                     return View(model);
                 }
                 Session["login"]=sonuc.nesne;
+
+                uygulama.kullaniciAd=model.KullaniciAd;
                return RedirectToAction("Index");
             }
             return View(model);
@@ -81,6 +85,7 @@ namespace MakaleWeb.Controllers
         [HttpPost]
          public ActionResult Register(KayitModel model)
         {
+            uygulama.kullaniciAd = model.kullaniciad;
             if (ModelState.IsValid)
             {
                 
@@ -126,13 +131,18 @@ namespace MakaleWeb.Controllers
         }
         public ActionResult profildegistir()
         {
+          
             Kullanici kul=(Kullanici) Session["login"];
             return View(kul);
         }
         [HttpPost]
-        public ActionResult profildegistir( Kullanici kul,HttpPostedFile profilresmi)
-        {
-            if (profilresmi != null && profilresmi.ContentType == "image/jpeg" || profilresmi.ContentType == "image/jpg" || profilresmi.ContentType == "image/png")
+        public ActionResult profildegistir( Kullanici kul,HttpPostedFileBase profilresmi)
+		{
+            uygulama.kullaniciAd = kul.KullaniciAd;
+            ModelState.Remove("DegistirenKullanici");
+			if (ModelState.IsValid)
+			{
+                if (profilresmi != null && profilresmi.ContentType == "image/jpeg" || profilresmi.ContentType == "image/jpg" || profilresmi.ContentType == "image/png")
             {
                 string dosyaAdi=$"user_{kul.ID}.{profilresmi.ContentType.Split('/')[1]}"; //"image/jpeg" split bunu böler sonra nereden bölceğimzi belirtiriz ve kaçıncı indexi alcağımızı söyleriz
                 profilresmi.SaveAs(Server.MapPath($"~/image/{dosyaAdi}"));
@@ -142,13 +152,28 @@ namespace MakaleWeb.Controllers
             if (sonuc.hatalar.Count > 0)
             {
                 sonuc.hatalar.ForEach(x=>ModelState.AddModelError("",x));
-                return View(sonuc);
+                return View(sonuc.nesne);
             }
+            return RedirectToAction("profilgoster");
+			}
+
+            
             return View(kul);
         }
-        //public ActionResult profilsil()
-        //{
+		public ActionResult profilsil()
+		{
+            Kullanici kul=Session["login"] as Kullanici;
+            BusinessLayer_Sonuc<Kullanici> sonuc=ky.kullaniciSil(kul.ID);
 
-        //}
-    }
+			if (sonuc.hatalar.Count > 0)
+			{
+                //hatalar ekranda gödterilir
+                sonuc.hatalar.ForEach(x => ModelState.AddModelError("", x));
+                return RedirectToAction("profilgoster",sonuc.nesne);  //silinmedi var olan nesneyi tekrar gönder dedi
+            }
+
+            Session.Clear();
+            return RedirectToAction("Index");
+		}
+	}
 }
