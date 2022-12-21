@@ -47,13 +47,19 @@ namespace MakaleWeb.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ID,Baslik,Aciklama,KayitTarihi,DegistirmeTarihi,DegistirenKullanici")] Kategori kategori)
+        public ActionResult Create( Kategori kategori)
         {
+            ModelState.Remove("Degistirenkullanici");
+
             if (ModelState.IsValid)
             {
-               ky.KategoriEkle(kategori);
-              
-                return RedirectToAction("Index");
+                BusinessLayer_Sonuc<Kategori> sonuc=ky.KategoriEkle(kategori);
+				if (sonuc.hatalar.Count > 0)
+				{
+                    sonuc.hatalar.ForEach(x=>ModelState.AddModelError("",x));
+                    return View(kategori);
+				}
+               return RedirectToAction("Index");
             }
 
             return View(kategori);
@@ -79,7 +85,7 @@ namespace MakaleWeb.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ID,Baslik,Aciklama,KayitTarihi,DegistirmeTarihi,DegistirenKullanici")] Kategori kategori)
+        public ActionResult Edit( Kategori kategori)
         {
             if (ModelState.IsValid)
             {
@@ -107,7 +113,7 @@ namespace MakaleWeb.Controllers
 
         // POST: Kategori/Delete/5
         [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
+        [ValidateAntiForgeryToken]   //antiforgerytoken ı html sayfasına da yazdık ve bu siteye yapılan saldıralrı önlemek için kullnılır
         public ActionResult DeleteConfirmed(int id)
         {
             Kategori kategori = ky.kategoribul(id);

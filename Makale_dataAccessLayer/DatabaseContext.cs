@@ -20,5 +20,11 @@ namespace Makale_dataAccessLayer
         {
             Database.SetInitializer(new veriTabaniOlustur());
         }
-    }
+		protected override void OnModelCreating(DbModelBuilder modelBuilder)  //bu işlem cascede ile silmemizi sağlıyor ve bu metotun adı fluentapi
+		{
+			modelBuilder.Entity<Note>().HasMany(n=>n.yorumlar).WithRequired(y=>y.not).WillCascadeOnDelete(true);
+            //yorumlar notlarla ilişkilidir.ve her yorumun bir notu olmak zorunda diyip cascede ile bu ilişkiyle siliyor
+            modelBuilder.Entity<Note>().HasMany(n=>n.like).WithRequired(b=>b.not).WillCascadeOnDelete(true);
+		}
+	}
 }

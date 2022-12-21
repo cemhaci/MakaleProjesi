@@ -8,9 +8,11 @@ using System.Threading.Tasks;
 
 namespace Makale_BLL
 {
-    public class KategoriYonet
+	
+	public class KategoriYonet
     {
-        repository<Kategori> rep_kat=new repository<Kategori>();
+		BusinessLayer_Sonuc<Kategori> sonuc = new BusinessLayer_Sonuc<Kategori>();
+		repository<Kategori> rep_kat=new repository<Kategori>();
         public List<Kategori> listele()
         {
             return rep_kat.liste();
@@ -20,9 +22,20 @@ namespace Makale_BLL
             return rep_kat.Find(x=>x.ID==id);
         }
 
-		public void KategoriUpdate(Kategori kategori)
+		public BusinessLayer_Sonuc<Kategori> KategoriUpdate(Kategori kategori)
 		{
-			throw new NotImplementedException();
+			sonuc.nesne=rep_kat.Find(x=>x.Baslik==kategori.Baslik);
+			if (sonuc.nesne != null)
+			{
+				sonuc.nesne.Baslik=kategori.Baslik;
+				sonuc.nesne.Aciklama=kategori.Aciklama;
+				int updatesonuc=rep_kat.Update(sonuc.nesne);
+				if (updatesonuc < 1)
+				{
+					sonuc.hatalar.Add("kategori bilgileri değiştirilemedi");
+				}
+			}
+			return sonuc;
 		}
 
 		public void kategoriSil(Kategori kategori)
@@ -30,9 +43,24 @@ namespace Makale_BLL
 			throw new NotImplementedException();
 		}
 
-		public void KategoriEkle(Kategori kategori)
+		public BusinessLayer_Sonuc<Kategori> KategoriEkle(Kategori kategori)
 		{
-			throw new NotImplementedException();
+			
+			sonuc.nesne=rep_kat.Find(x=>x.Baslik==kategori.Baslik);
+			if (sonuc.nesne != null)
+			{
+				sonuc.hatalar.Add("bu katagori kayıtlı");
+
+			}
+			else
+			{
+				int kayit=rep_kat.Insert(kategori);
+				if (kayit > 1)
+				{
+					sonuc.hatalar.Add("kategori kaydedilemedi");
+				}
+			}
+			return sonuc;
 		}
 	}
 }

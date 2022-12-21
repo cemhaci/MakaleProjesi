@@ -16,7 +16,7 @@ namespace Makale_Entity
         public string Ad { get; set; }
          [StringLength(50)]
         public string Soyad { get; set; }
-        [StringLength (50)]
+        [StringLength (50),ScaffoldColumn(false)]  //yeni contrtolller oluştururken otomatik controller oluştururken yer almasını istemediğimiz kolonlara bunu yazıyoruz
         public string profilresim { get; set; }
         [Required, StringLength(50)]
         public string KullaniciAd { get; set; }

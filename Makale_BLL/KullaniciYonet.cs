@@ -13,6 +13,11 @@ namespace Makale_BLL
     public class KullaniciYonet
     {
         repository<Kullanici> rep_kul= new repository<Kullanici>();
+
+        public List<Kullanici> listele()
+		{
+            return rep_kul.liste();
+		}
         public BusinessLayer_Sonuc<Kullanici> kaydet(KayitModel model) //BusinessLayer_Sonuc<Kullanici> bu tür de döndürmesini istiyoruz çünkü model e hata varsa onları yoksa T tipine gönderddiğimiz bilgileri döndürsün
         {
             BusinessLayer_Sonuc<Kullanici> sonuc=new BusinessLayer_Sonuc<Kullanici>();
@@ -99,9 +104,12 @@ namespace Makale_BLL
             return sonuc;
         }
         public BusinessLayer_Sonuc<Kullanici> kullaniciUpdate(Kullanici kul)
-        {
+        {//hocanın notlarda mevcut oradan devam et
+
+
             BusinessLayer_Sonuc<Kullanici> sonuc=new BusinessLayer_Sonuc<Kullanici>();
             Kullanici k=rep_kul.Find(x=>x.KullaniciAd==kul.KullaniciAd||x.Email==kul.Email);
+            Kullanici k2=rep_kul.Find(x=>x.Email==kul.Email);
 
             if(k!= null && k.ID != kul.ID)  //database de böyle bir kullanıcı varsa
             {
@@ -113,6 +121,7 @@ namespace Makale_BLL
                 {
                     sonuc.hatalar.Add("email sistemde kayıtlı");
                 }
+                sonuc.nesne=kul; //hoome controller daki profildeğiştir nesne döndürüyor bunları nesneye atmazsak profil degistirde nesne boş olucaktır.
                  return sonuc;
             }
             sonuc.nesne=rep_kul.Find(x=>x.ID==kul.ID);
