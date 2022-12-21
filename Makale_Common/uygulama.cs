@@ -8,6 +8,6 @@ namespace Makale_Common
 {
 	public static class uygulama
 	{
-		public static string kullaniciAd { get; set; }
+		public static string kullaniciAd = "system";
 	}
 }

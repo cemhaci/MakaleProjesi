@@ -38,10 +38,45 @@ namespace Makale_BLL
 			return sonuc;
 		}
 
-		public void kategoriSil(Kategori kategori)
+		public BusinessLayer_Sonuc<Kategori> kategoriSil(Kategori kategori)
 		{
-			throw new NotImplementedException();
-		}
+			BusinessLayer_Sonuc<Kategori> sonuc = new BusinessLayer_Sonuc<Kategori>();
+			sonuc.nesne = rep_kat.Find(x => x.ID == kategori.ID);
+
+			repository<Note> rep_note = new repository<Note>();
+			repository<Yorum> rep_yorum = new repository<Yorum>();
+			repository<Like> rep_like = new repository<Like>();
+
+            if (sonuc.nesne != null)
+            {
+                //foreach (Not not in sonuc.nesne.Notlar.ToList())
+                //{
+                //    foreach (Yorum yorum in not.Yorumlar.ToList())
+                //    {
+                //        rep_yorum.Delete(yorum);
+                //        //yorumlar silinecek
+                //    }
+
+                //    foreach (Begeni begen in not.Begeniler.ToList())
+                //    {
+                //        rep_begeni.Delete(begen);
+                //        //beğeniler silinecek
+                //    }
+
+                //    //notlar silinecek
+                //    rep_not.Delete(not);
+                //}
+
+                int silsonuc = rep_kat.Delete(sonuc.nesne);//kategori siliniyor
+                if (silsonuc < 1)
+                    sonuc.hatalar.Add("Kullanıcı silinemedi.");
+            }
+            else
+            {
+                sonuc.hatalar.Add("Kullanıcı bulunamadı");
+            }
+            return sonuc;
+        }
 
 		public BusinessLayer_Sonuc<Kategori> KategoriEkle(Kategori kategori)
 		{
@@ -55,7 +90,7 @@ namespace Makale_BLL
 			else
 			{
 				int kayit=rep_kat.Insert(kategori);
-				if (kayit > 1)
+				if (kayit < 1)
 				{
 					sonuc.hatalar.Add("kategori kaydedilemedi");
 				}

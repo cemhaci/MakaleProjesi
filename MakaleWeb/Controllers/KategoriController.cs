@@ -87,10 +87,16 @@ namespace MakaleWeb.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit( Kategori kategori)
         {
+            ModelState.Remove("DegistirenKullanici");
+
             if (ModelState.IsValid)
             {
-               ky.KategoriUpdate(kategori);
-                
+              BusinessLayer_Sonuc<Kategori> sonuc= ky.KategoriUpdate(kategori);
+                if (sonuc.hatalar.Count > 0)
+                {
+                    sonuc.hatalar.ForEach(x => ModelState.AddModelError("", x));
+                    return View(kategori);
+                }
                 return RedirectToAction("Index");
             }
             return View(kategori);
@@ -117,7 +123,7 @@ namespace MakaleWeb.Controllers
         public ActionResult DeleteConfirmed(int id)
         {
             Kategori kategori = ky.kategoribul(id);
-           ky.kategoriSil(kategori);
+            BusinessLayer_Sonuc<Kategori> sonuc = ky.kategoriSil(kategori);
            
             return RedirectToAction("Index");
         }

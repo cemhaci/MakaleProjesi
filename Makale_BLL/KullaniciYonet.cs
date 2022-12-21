@@ -104,26 +104,31 @@ namespace Makale_BLL
             return sonuc;
         }
         public BusinessLayer_Sonuc<Kullanici> kullaniciUpdate(Kullanici kul)
-        {//hocanın notlarda mevcut oradan devam et
+        {
 
 
             BusinessLayer_Sonuc<Kullanici> sonuc=new BusinessLayer_Sonuc<Kullanici>();
-            Kullanici k=rep_kul.Find(x=>x.KullaniciAd==kul.KullaniciAd||x.Email==kul.Email);
+            Kullanici k1 = rep_kul.Find(x => x.KullaniciAd == kul.KullaniciAd);
             Kullanici k2=rep_kul.Find(x=>x.Email==kul.Email);
 
-            if(k!= null && k.ID != kul.ID)  //database de böyle bir kullanıcı varsa
+            if(k1!= null && k1.ID != kul.ID)  //database de böyle bir kullanıcı varsa
             {
-                 if (k.KullaniciAd == kul.KullaniciAd)
-                {
+                 //if (k.KullaniciAd == kul.KullaniciAd)
+                
                     sonuc.hatalar.Add("kullanıcı adı sistemde kayıtlı");  //sonucun hatalarına bunu ekle
-                }
-                if(k.Email == kul.Email)
+            }
+            if (k2!=null&&k2.ID!=kul.ID)
                 {
                     sonuc.hatalar.Add("email sistemde kayıtlı");
                 }
-                sonuc.nesne=kul; //hoome controller daki profildeğiştir nesne döndürüyor bunları nesneye atmazsak profil degistirde nesne boş olucaktır.
-                 return sonuc;
+            if (sonuc.hatalar.Count > 0)
+            {
+                sonuc.nesne = kul;
+                return sonuc;
             }
+            /*sonuc.nesne=kul;*/ //hoome controller daki profildeğiştir nesne döndürüyor bunları nesneye atmazsak profil degistirde nesne boş olucaktır.
+                 return sonuc;
+           
             sonuc.nesne=rep_kul.Find(x=>x.ID==kul.ID);
             sonuc.nesne.Ad=kul.Ad;
             sonuc.nesne.Email = kul.Email;
@@ -159,5 +164,15 @@ namespace Makale_BLL
 			}
             return sonuc;
 		}
-	}
+
+        public Kullanici KullaniciBul(int? id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void KullaniciKaydet(Kullanici kullanici)
+        {
+            throw new NotImplementedException();
+        }
+    }
 }

@@ -100,6 +100,7 @@ namespace MakaleWeb.Controllers
             }
             return View(model);
         }
+     
         public ActionResult useractivate(Guid id)
         {
              BusinessLayer_Sonuc<Kullanici> sonuc=ky.ActivateUser(id);
