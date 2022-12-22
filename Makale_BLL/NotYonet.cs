@@ -20,5 +20,25 @@ namespace Makale_BLL
         {
             return rep_not.listeQ();
         }
-    }
+
+		public Note NotBul(int? id)
+		{
+			throw new NotImplementedException();
+		}
+
+		public void NotKaydet(Note note)
+		{
+			throw new NotImplementedException();
+		}
+
+		public void NotUpdate(Note note)
+		{
+			throw new NotImplementedException();
+		}
+
+		public void NotSil(Note note)
+		{
+			throw new NotImplementedException();
+		}
+	}
 }

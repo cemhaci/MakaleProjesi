@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
@@ -17,6 +18,8 @@ namespace Makale_Entity
         public string Text { get; set; }
         public bool Taslak { get; set; }
         public int BegeniSayisi { get; set; }
+
+        [DisplayName("kategori")]
         public int KategoriId { get; set; }  //not üzerinden kategori id ye kolay erişebilmke için yazdık
 
           public virtual Kategori kategori{ get; set; }

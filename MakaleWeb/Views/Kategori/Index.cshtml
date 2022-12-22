@@ -47,7 +47,9 @@
             @Html.DisplayFor(modelItem => item.DegistirenKullanici)
         </td>
         <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.ID }) |
+            @BootstrapHelper.LinkButton("/kategori/edit/"+@item.ID, "warning", "btn-sm", "edit")
+           
+            @*<a href="/kategori/edit/@item.ID" class="btn btn-warning btn-sm"><span class="glyphicon glyphicon-edit"></span></a> |*@   @*bunu helper metodu oluşturarak yaptık*@ 
             @Html.ActionLink("Details", "Details", new { id=item.ID }) |
             @Html.ActionLink("Delete", "Delete", new { id=item.ID })
         </td>
