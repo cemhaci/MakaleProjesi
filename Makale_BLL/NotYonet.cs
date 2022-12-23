@@ -10,6 +10,7 @@ namespace Makale_BLL
 {
     public class NotYonet
     {
+		BusinessLayer_Sonuc<Note> notsonuc=new BusinessLayer_Sonuc<Note>();
         repository<Note> rep_not=new repository<Note>();
          public List<Note> listele()
         {
@@ -23,22 +24,61 @@ namespace Makale_BLL
 
 		public Note NotBul(int? id)
 		{
-			throw new NotImplementedException();
+			return rep_not.Find(x=>x.ID==id);
 		}
 
-		public void NotKaydet(Note note)
+		public BusinessLayer_Sonuc<Note> NotKaydet(Note note)
 		{
-			throw new NotImplementedException();
+			notsonuc.nesne=rep_not.Find(x=>x.Baslik==note.Baslik&&x.KategoriId==note.KategoriId);
+
+			if (notsonuc.nesne != null)
+			{
+				notsonuc.hatalar.Add("bu kategoride bu isimde makale kayıtlı");
+			}
+			else
+			{
+				int sonuc=rep_not.Insert(note);
+				if (sonuc < 1)
+				
+					notsonuc.hatalar.Add("kayıt eklenemedi");				
+			}
+			return notsonuc;
 		}
 
-		public void NotUpdate(Note note)
+		public BusinessLayer_Sonuc<Note> NotUpdate(Note note)
 		{
-			throw new NotImplementedException();
+			notsonuc.nesne= rep_not.Find(x=>x.ID==note.ID);
+
+			if(notsonuc.nesne != null)
+			{
+				notsonuc.nesne.Baslik=note.Baslik;
+				notsonuc.nesne.Text= note.Text;
+				notsonuc.nesne.Taslak=note.Taslak;
+				notsonuc.nesne.KategoriId=note.KategoriId;
+				if (rep_not.Update(notsonuc.nesne) < 1)
+				{
+					notsonuc.hatalar.Add("güncellenemedi");
+				}
+		    }
+			return notsonuc;
 		}
 
-		public void NotSil(Note note)
+		public BusinessLayer_Sonuc<Note> NotSil(Note note)
 		{
-			throw new NotImplementedException();
+			notsonuc.nesne = rep_not.Find(x=>x.ID==note.ID);
+			if(notsonuc.nesne != null)
+			{
+				int sonuc=rep_not.Delete(note);
+				if (sonuc < 1)
+				{
+					notsonuc.hatalar.Add("kayıt silinemedi");
+				}
+			}
+			else
+			{
+				notsonuc.hatalar.Add("kayıt bulunamamadı");
+			}
+			return notsonuc;
 		}
 	}
 }
