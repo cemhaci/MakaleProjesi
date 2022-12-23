@@ -18,11 +18,10 @@ namespace Makale_BLL
 		{
             return rep_kul.liste();
 		}
-
         public BusinessLayer_Sonuc<Kullanici> kaydet(KayitModel model) //BusinessLayer_Sonuc<Kullanici> bu tür de döndürmesini istiyoruz çünkü model e hata varsa onları yoksa T tipine gönderddiğimiz bilgileri döndürsün
         {
             BusinessLayer_Sonuc<Kullanici> sonuc=new BusinessLayer_Sonuc<Kullanici>();
-            Kullanici k=new Kullanici();
+            Kullanici kul=rep_kul.Find(x=>x.KullaniciAd==model.kullaniciad||x.Email==model.email);
 
             if (kul != null)
             {
@@ -168,53 +167,12 @@ namespace Makale_BLL
 
         public Kullanici KullaniciBul(int? id)
         {
-           return rep_kul.Find(x=>x.ID==id);
+            throw new NotImplementedException();
         }
-        //
-        public BusinessLayer_Sonuc<Kullanici> KullaniciKaydet(Kullanici kullanici)
-            
-        {//yönetici bir kullanıcı kaydetmek isterse bu metotdu çalıştırıyoruz
-            BusinessLayer_Sonuc<Kullanici> sonuc = new BusinessLayer_Sonuc<Kullanici>();
-            Kullanici kul = rep_kul.Find(x => x.KullaniciAd == model.kullaniciad || x.Email == model.email);
 
-            if (kul != null)
-            {
-                if (kul.KullaniciAd == model.kullaniciad)
-                {
-                    sonuc.hatalar.Add("kullanıcı adı sistemde kayıtlı");  //sonucun hatalarına bunu ekle
-                }
-                if (kul.Email == model.email)
-                {
-                    sonuc.hatalar.Add("email sistemde kayıtlı");
-                }
-            }
-            else
-            {
-                int kaydet = rep_kul.Insert(new Kullanici()
-                {
-                    Email = model.email,
-                    KullaniciAd = model.kullaniciad,
-                    Sifre = model.sifre,
-                    AktifGuid = Guid.NewGuid(),
-                    DegistirmeTarihi = DateTime.Now,
-                    DegistirenKullanici = "system",
-                    Admin = false,
-                    Aktif = false,
-
-                });
-                if (kaydet > 0)
-                {
-                    sonuc.nesne = rep_kul.Find(x => x.Email == model.email && x.KullaniciAd == model.kullaniciad);
-
-                    string siteUrl = ConfigHelper.Get<string>("SiteRootUri");
-                    string activateUrl = $"{ siteUrl}/Home/UserActivate/{sonuc.nesne.AktifGuid}";
-                    string body = $"Merhaba{sonuc.nesne.KullaniciAd} <br/> Hesabınızı aktifleştirmek için <a href='{activateUrl}'>tıklayınız</a> ";
-                    MailHelper.SendMail(body, sonuc.nesne.Email, "hesap aktifleştirme");
-
-                }
-
-            }
-            return sonuc;
+        public void KullaniciKaydet(Kullanici kullanici)
+        {
+            throw new NotImplementedException();
         }
     }
 }
