@@ -51,7 +51,13 @@ namespace MakaleWeb.Controllers
         {
             if (ModelState.IsValid)
             {
-                ky.KullaniciKaydet(kullanici);
+                BusinessLayer_Sonuc<Kullanici> sonuc=ky.KullaniciKaydet(kullanici);
+				if (sonuc.hatalar.Count > 0)
+				{
+                    sonuc.hatalar.ForEach(x=>ModelState.AddModelError("",x));
+                    return View(kullanici);
+				}
+              
                 
                 return RedirectToAction("Index");
             }
