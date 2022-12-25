@@ -23,17 +23,15 @@ namespace Makale_BLL
         {
             BusinessLayer_Sonuc<Kullanici> sonuc=new BusinessLayer_Sonuc<Kullanici>();
             Kullanici k=new Kullanici();
+            k.KullaniciAd = model.kullaniciad;
+            k.Email = model.email;
 
-            if (kul != null)
+            sonuc = kullanicikontrol(k);
+
+            if (sonuc.hatalar.Count > 0)
             {
-                if (kul.KullaniciAd == model.kullaniciad)
-                {
-                    sonuc.hatalar.Add("kullanıcı adı sistemde kayıtlı");  //sonucun hatalarına bunu ekle
-                }
-                if(kul.Email == model.email)
-                {
-                    sonuc.hatalar.Add("email sistemde kayıtlı");
-                }
+                sonuc.nesne = k;
+                return sonuc;
             }
             else
             {
@@ -43,8 +41,8 @@ namespace Makale_BLL
                     KullaniciAd=model.kullaniciad,
                     Sifre=model.sifre,
                     AktifGuid=Guid.NewGuid(),
-                    DegistirmeTarihi=DateTime.Now,
-                    DegistirenKullanici="system",
+                    //DegistirmeTarihi=DateTime.Now,
+                    //DegistirenKullanici="system",
                     Admin=false,
                     Aktif=false,
                    
@@ -62,6 +60,25 @@ namespace Makale_BLL
                
             }
              return sonuc;
+        }
+        private BusinessLayer_Sonuc<Kullanici> kullanicikontrol(Kullanici kullanici)
+        {
+            BusinessLayer_Sonuc<Kullanici> sonuc = new BusinessLayer_Sonuc<Kullanici>();
+            Kullanici k1 = rep_kul.Find(x => x.KullaniciAd == kullanici.KullaniciAd);
+
+            Kullanici k2=rep_kul.Find(x=>x.Email == kullanici.Email);
+
+            if(k1!=null &&k1.ID != kullanici.ID)
+            {
+                sonuc.hatalar.Add("kullanıcı adı sistemde kayıtlı");
+
+            }
+
+            if(k2!=null &&k2.ID != kullanici.ID)
+            {
+                sonuc.hatalar.Add("email sistemde kayıtlı");
+            }
+            return sonuc;
         }
         public BusinessLayer_Sonuc<Kullanici> loginKontrol(LoginModel model)
         {
@@ -109,19 +126,21 @@ namespace Makale_BLL
 
 
             BusinessLayer_Sonuc<Kullanici> sonuc=new BusinessLayer_Sonuc<Kullanici>();
-            Kullanici k1 = rep_kul.Find(x => x.KullaniciAd == kul.KullaniciAd);
-            Kullanici k2=rep_kul.Find(x=>x.Email==kul.Email);
+            //Kullanici k1 = rep_kul.Find(x => x.KullaniciAd == kul.KullaniciAd);
+            //Kullanici k2=rep_kul.Find(x=>x.Email==kul.Email);
 
-            if(k1!= null && k1.ID != kul.ID)  //database de böyle bir kullanıcı varsa
-            {
-                 //if (k.KullaniciAd == kul.KullaniciAd)
-                
-                    sonuc.hatalar.Add("kullanıcı adı sistemde kayıtlı");  //sonucun hatalarına bunu ekle
-            }
-            if (k2!=null&&k2.ID!=kul.ID)
-                {
-                    sonuc.hatalar.Add("email sistemde kayıtlı");
-                }
+            //if(k1!= null && k1.ID != kul.ID)  //database de böyle bir kullanıcı varsa
+            //{
+            //     //if (k.KullaniciAd == kul.KullaniciAd)
+
+            //        sonuc.hatalar.Add("kullanıcı adı sistemde kayıtlı");  //sonucun hatalarına bunu ekle
+            //}
+            //if (k2!=null&&k2.ID!=kul.ID)
+            //    {
+            //        sonuc.hatalar.Add("email sistemde kayıtlı");
+            //    }
+
+            sonuc = kullanicikontrol(kul);
             if (sonuc.hatalar.Count > 0)
             {
                 sonuc.nesne = kul;
@@ -175,44 +194,20 @@ namespace Makale_BLL
             
         {//yönetici bir kullanıcı kaydetmek isterse bu metotdu çalıştırıyoruz
             BusinessLayer_Sonuc<Kullanici> sonuc = new BusinessLayer_Sonuc<Kullanici>();
-            Kullanici kul = rep_kul.Find(x => x.KullaniciAd == model.kullaniciad || x.Email == model.email);
+            sonuc = kullanicikontrol(kullanici);
 
-            if (kul != null)
+            if (sonuc.hatalar.Count > 0)
             {
-                if (kul.KullaniciAd == model.kullaniciad)
-                {
-                    sonuc.hatalar.Add("kullanıcı adı sistemde kayıtlı");  //sonucun hatalarına bunu ekle
-                }
-                if (kul.Email == model.email)
-                {
-                    sonuc.hatalar.Add("email sistemde kayıtlı");
-                }
+                sonuc.nesne = kullanici;
+                return sonuc;
             }
             else
             {
-                int kaydet = rep_kul.Insert(new Kullanici()
+                int kayit = rep_kul.Insert(kullanici);
+                if(kayit < 1)
                 {
-                    Email = model.email,
-                    KullaniciAd = model.kullaniciad,
-                    Sifre = model.sifre,
-                    AktifGuid = Guid.NewGuid(),
-                    DegistirmeTarihi = DateTime.Now,
-                    DegistirenKullanici = "system",
-                    Admin = false,
-                    Aktif = false,
-
-                });
-                if (kaydet > 0)
-                {
-                    sonuc.nesne = rep_kul.Find(x => x.Email == model.email && x.KullaniciAd == model.kullaniciad);
-
-                    string siteUrl = ConfigHelper.Get<string>("SiteRootUri");
-                    string activateUrl = $"{ siteUrl}/Home/UserActivate/{sonuc.nesne.AktifGuid}";
-                    string body = $"Merhaba{sonuc.nesne.KullaniciAd} <br/> Hesabınızı aktifleştirmek için <a href='{activateUrl}'>tıklayınız</a> ";
-                    MailHelper.SendMail(body, sonuc.nesne.Email, "hesap aktifleştirme");
-
+                    sonuc.hatalar.Add("kategori kaydedilemedi");
                 }
-
             }
             return sonuc;
         }
