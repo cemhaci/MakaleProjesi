@@ -1,8 +1,8 @@
-﻿@using Makale_BLL  @*web projemiz bll ye erişebiliyor referance sine öyle yazdık*@
+﻿@using MakaleWeb.Models      
 @using Makale_Entity
 @{ 
-    KategoriYonet ky=new KategoriYonet();
-    List<Kategori> kategoriler= ky.listele();
+    
+    List<Kategori> kategoriler= CacheHelper.kategoriler();
 }
             <p class="lead">Kategoriler</p>
             <div class="list-group">

@@ -8,6 +8,7 @@ using System.Web;
 using System.Web.Mvc;
 using Makale_BLL;
 using Makale_Entity;
+using MakaleWeb.Models;
 
 namespace MakaleWeb.Controllers
 {
@@ -61,7 +62,7 @@ namespace MakaleWeb.Controllers
         // GET: Note/Create
         public ActionResult Create()
         {
-            ViewBag.KategoriId = new SelectList(ky.listele(), "ID", "Baslik");  //crate in viewinde dropdawn list var ve o dropdown listte kategorileri doldurmak için selectlist kullandık.
+            ViewBag.KategoriId = new SelectList(CacheHelper.kategoriler(), "ID", "Baslik");  //crate in viewinde dropdawn list var ve o dropdown listte kategorileri doldurmak için selectlist kullandık.  listele metodunun yerine cachelper ı kullandık
             return View();
         }
 

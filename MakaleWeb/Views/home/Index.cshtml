@@ -80,7 +80,7 @@
                             </div>
                             <div class="ratings">
                                 <p class="pull-right">
-                                    <button class="btn btn-default btn-xs"><span class="glyphicon glyphicon-comment text-danger"></span>Yorumlar</button>
+                                    <button class="btn btn-default btn-xs" data-toggle="modal" data-target="#modal1" data-whatever="@item.ID"><span class="glyphicon glyphicon-comment text-danger"></span>Yorumlar</button>
                                 </p>
                                 <p>
                                     <button class="btn btn-default btn-xs">
@@ -102,3 +102,29 @@
 @section footer{
     @Html.Partial("_PartialPageFooter")
 }
+
+
+@BootstrapHelper.ModalPoppup("modal1","yorumlar")
+<script>
+    $(function () {     //bu function ımız sayfa yklenriken çalışacaktır
+
+        $('#modal1').on('show.bs.modal', function (event) {
+            var button = $(event.relatedTarget) // Button that triggered the modal
+            var NotId = button.data('whatever')
+
+        //$('#modal1').on('show.bs.modal', function (e) {
+        //    console.log("test");
+        //    var button = $(e.relatedTarget);   //reletedtarget tıklanaan şeyin bilgisi demek.yani butonun
+        //    console.log("test");
+        //    var NotId = button.data("NotId");
+        //    console.log(NotId);
+            $('#modal1_body').load("/Yorum/YorumGoster/" + NotId);
+            console.log("test");
+        });
+    });
+    function yorumupdate(mod,yorumid,yorumtext)   //bu function ise ne zaman çağırırsak o zaman çalışacaktır
+    {
+
+    }
+</script>
+
