@@ -10,6 +10,7 @@ namespace MakaleWeb.Controllers
 {
     public class YorumController : Controller
     {
+        YorumYonet yy = new YorumYonet();
         // GET: Yorum
         public ActionResult YorumGoster(int? id)
         {
@@ -21,6 +22,37 @@ namespace MakaleWeb.Controllers
             Note not=ny.NotBul(id.Value);
            
             return PartialView("_PartialPageYorum", not.yorumlar);
+        }
+        [HttpPost]
+        public ActionResult edit (int? id,string text)
+        {
+            if(id== null)
+            {
+                return new HttpStatusCodeResult(System.Net.HttpStatusCode.BadRequest);
+            }
+           
+            Yorum yorum=yy.YorumBul(id.Value);
+
+            if(yorum == null)
+            {
+                return new HttpNotFoundResult();
+            }
+            yorum.Text=text;
+            if (yy.yorumguncelle(yorum) > 0)
+            {
+                return Json(new {sonuc=true},JsonRequestBehavior.AllowGet);
+            }
+            return Json(new { sonuc = false }, JsonRequestBehavior.AllowGet);
+        } 
+        [HttpPost]
+        public ActionResult delete(int id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(System.Net.HttpStatusCode.BadRequest);
+            }
+            yy.delete(id);
+            return Json(JsonRequestBehavior.AllowGet);
         }
     }
 }

@@ -16,12 +16,12 @@
         </div>
         <div class="media-body">
             <div>
-                <span class="col-md-10" id="text_@item.ID">@item.Text</span>
+                <span class="col-md-10" contenteditable="false" id="text_@item.ID">@item.Text</span>  @*contenteditable özelliği ile buttona bastığımmızda true olcak ve sayfa üzerinden değişiklik yapabiliyor olucaz*@
                 @if (kullanici != null && kullanici.ID == item.kullanici.ID)
                 {
                     <span class="col-md-2 text-right">
-                        <button type="button" class="btn  btn-warning btn-sm" onclick="yorumupdate('edit',@item.ID, text_@item.ID)"><span class="glyphicon glyphicon-edit"></span></button>
-                        <button type="button" class="btn  btn-danger btn-sm"><span class="glyphicon glyphicon-trash"></span></button>
+                        <button type="button" class="btn  btn-warning btn-sm" data-edit="false" onclick="yorumislem(this, 'update',@item.ID, text_@item.ID)"><span class="glyphicon glyphicon-edit"></span></button>
+                        <button type="button" onclick="yorumislem(this, 'delete',@item.ID)" class="btn  btn-danger btn-sm"><span class="glyphicon glyphicon-trash"></span></button>
                     </span>
                 }
                 <small>
