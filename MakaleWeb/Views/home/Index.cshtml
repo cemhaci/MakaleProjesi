@@ -178,6 +178,22 @@
                 alert("sunucu ile bağlantı kurulamadı");
             })
         }
+        else if (islem === 'create') {
+            var yorum = $('#yorum_text').val();
+            $.ajax({
+                method: 'Post',
+                url: "/yorum/create/",
+                data: { Text: yorum, notid: NotId }
+            }).done(function (data) {    //yorum contreller da ki edit de return edilen bilgi data ya geliyor
+                //done olunca yorumlar yeniden yüklenir
+                if (data.sonuc)
+                    $('#modal1_body').load("/Yorum/YorumGoster/" + NotId);
+                else
+                    alert("yorum düzenlenemedi");
+            }).fail(function () {
+                alert('sunucu ile bağlatı kurulamadı');
+            })
+        }
     }
 </script>
 

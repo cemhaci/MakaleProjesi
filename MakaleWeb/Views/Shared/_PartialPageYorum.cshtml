@@ -1,12 +1,12 @@
 ﻿@using Makale_Entity
 
 @model List<Yorum>
-@{ 
-    Kullanici kullanici=null;
-    if(Session["login"] != null)
-            {
-                kullanici=Session["login"] as Kullanici;
-            }
+@{
+    Kullanici kullanici = null;
+    if (Session["login"] != null)
+    {
+        kullanici = Session["login"] as Kullanici;
+    }
 }
 @foreach (var item in Model)
 {
@@ -33,4 +33,13 @@
         </div>
     </div>
 
+}
+@if (kullanici != null)  //kullanıcı girişi olduysa yorum yapabilecek
+{
+    <div class="input-group">
+        <input type="text" class="form-control" id="yorum_text" placeholder="Search for...">
+        <span class="input-group-btn">
+            <button class="btn btn-default" type="button" onclick="yorumislem(this, 'create')">Go!</button>
+        </span>
+    </div><!-- /input-group -->
 }
