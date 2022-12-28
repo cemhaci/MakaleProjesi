@@ -12,10 +12,12 @@ using MakaleWeb.Models;
 
 namespace MakaleWeb.Controllers
 {
+   
     public class NoteController : Controller
     {
         KategoriYonet ky= new KategoriYonet();
         NotYonet ny=new NotYonet();
+        LikeYonet ly = new LikeYonet();
         // GET: Note
         public ActionResult Index()
         {
@@ -33,7 +35,7 @@ namespace MakaleWeb.Controllers
         }
         public ActionResult begendiklerim()
 		{
-            LikeYonet ly=new LikeYonet();
+           
             var notes = ny.listeleQueryable().Include(n => n.kategori);
             if (Session["login"] != null)
             {
@@ -173,7 +175,65 @@ namespace MakaleWeb.Controllers
 
             return RedirectToAction("Index");
         }
+        [HttpPost]
+        public ActionResult GetLikes(int[] id_dizi)
+        {
+            List<int> likenot = new List<int>();
 
-        
+            Kullanici kul = (Kullanici)Session["login"];
+
+            if (kul != null)
+                likenot = ly.Listele(x => x.kullanici.ID == kul.ID && id_dizi.Contains(x.not.ID)).Select(x => x.not.ID).ToList();
+
+            //select not_id from begeni where kullanici_id=2 and not_id in (1,5,8,9,6)
+
+            return Json(new { sonuc = likenot });
+        }
+
+        public ActionResult SetLike(int notid, bool like)
+        {
+            int sonuc = 0;
+            Kullanici kul = (Kullanici)Session["login"];
+
+            Note not = ny.NotBul(notid);
+            Like begen = ly.BegeniBul(notid, kul.ID);
+
+            if (begen != null && like == false)
+            {
+                sonuc = ly.BegeniSil(begen);
+            }
+            else if (begen == null && like == true)
+            {
+                sonuc = ly.BegeniEkle(new Like()
+                {
+                    kullanici = kul,
+                    not = not
+                });
+            }
+
+            if (sonuc > 0)
+            {
+                if (like)
+                {
+                    not.BegeniSayisi++;
+                }
+                else
+                {
+                    not.BegeniSayisi--;
+                }
+
+               BusinessLayer_Sonuc<Note> notupdate = ny.NotUpdate(not);
+
+                if (notupdate.hatalar.Count == 0)
+                {
+                    return Json(new { hata = false, res = not.BegeniSayisi });
+                }
+            }
+
+            return Json(new { hata = true, res = not.BegeniSayisi });
+
+        }
+
+
     }
 }

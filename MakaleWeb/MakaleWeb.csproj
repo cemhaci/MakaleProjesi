@@ -152,6 +152,7 @@
     <Content Include="Scripts\jquery-3.6.1.min.js" />
     <Content Include="Scripts\jquery-3.6.1.slim.js" />
     <Content Include="Scripts\jquery-3.6.1.slim.min.js" />
+    <Content Include="Scripts\likes.js\like.js" />
     <Content Include="Scripts\popper-utils.js" />
     <Content Include="Scripts\popper-utils.min.js" />
     <Content Include="Scripts\popper.js" />
@@ -160,6 +161,7 @@
     <Content Include="Scripts\umd\popper-utils.min.js" />
     <Content Include="Scripts\umd\popper.js" />
     <Content Include="Scripts\umd\popper.min.js" />
+    <Content Include="Scripts\yorumlar.js\yorum.js" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>

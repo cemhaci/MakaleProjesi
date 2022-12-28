@@ -41,41 +41,48 @@
         <th></th>
     </tr>
 
-@foreach (var item in Model) {
-<tr>
-    <td>
-        @Html.DisplayFor(modelItem => item.kullanici.KullaniciAd)
-    </td>
-    <th>
-        @Html.DisplayFor(modelItem => item.kategori.Baslik)
-    </th>
-    <td>
-        @Html.DisplayFor(modelItem => item.Baslik)
-    </td>
-    <td>
-        @Html.DisplayFor(modelItem => item.Text)
-    </td>
-    <td>
-        @Html.DisplayFor(modelItem => item.Taslak)
-    </td>
-    <td>
-        @Html.DisplayFor(modelItem => item.BegeniSayisi)
-    </td>
-    <td>
-        @Html.DisplayFor(modelItem => item.KayitTarihi)
-    </td>
-    <td>
-        @Html.DisplayFor(modelItem => item.DegistirmeTarihi)
-    </td>
-    <td>
-        @Html.DisplayFor(modelItem => item.DegistirenKullanici)
-    </td>
-    <td>
-        @Html.ActionLink("Edit", "Edit", new { id = item.ID }) |
-        @Html.ActionLink("Details", "Details", new { id = item.ID }) |
-        @Html.ActionLink("Delete", "Delete", new { id = item.ID })
-    </td>
-</tr>
-}
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.kullanici.KullaniciAd)
+            </td>
+            <th>
+                @Html.DisplayFor(modelItem => item.kategori.Baslik)
+            </th>
+            <td>
+                @Html.DisplayFor(modelItem => item.Baslik)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Text)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Taslak)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.BegeniSayisi)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.KayitTarihi)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DegistirmeTarihi)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DegistirenKullanici)
+            </td>
+            <td style="display:flex">
+                <button class="btn btn-success btn-sm"
+                        data-toggle="modal" data-target="#modal1" data-notid="@item.Id">
+                    <span class="glyphicon glyphicon-comment"></span>
+                </button>
+                @BootstrapHelper.LinkButton("/Note/Edit/" + item.ID, "warning", "btn-sm", "edit", "")
+                @BootstrapHelper.LinkButton("/Note/Details/" + item.ID, "info", "btn-sm", "search", "")
+                @BootstrapHelper.LinkButton("/Note/Delete/" + item.ID, "danger", "btn-sm", "trash", "")
+            </td>
+        </tr>
+    }
 
 </table>
+@BootstrapHelper.ModalPoppup("modal1", "yorumlar")
+<script src="~/Scripts/yorumlar.js/yorum.js"></script>
