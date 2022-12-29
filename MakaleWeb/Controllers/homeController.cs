@@ -2,6 +2,7 @@
 using Makale_Common;
 using Makale_Entity;
 using Makale_Entity.ViewModel;
+using MakaleWeb.filters;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,7 +25,7 @@ namespace MakaleWeb.Controllers
            //test1.YorumEkle();
           
             //return View(ny.listele().OrderByDescending(x=>x.DegistirmeTarihi).ToList()); // responsitory de extra metot oluşturmaddan da bunu çalıştırıp sıralayabilliriz.
-               return View(ny.listeleQueryable().OrderByDescending(x=>x.DegistirmeTarihi).ToList());
+               return View(ny.listeleQueryable().Where(x=>x.Taslak==false).OrderByDescending(x=>x.DegistirmeTarihi).ToList());
         }
         public ActionResult kategori(int? id)
         {
@@ -32,14 +33,21 @@ namespace MakaleWeb.Controllers
             {
                 return new HttpStatusCodeResult(System.Net.HttpStatusCode.BadRequest);  //hata kodu döndürcek
             }
-          KategoriYonet ky=new KategoriYonet();
-            Kategori kategori= ky.kategoribul(id.Value);
+          //KategoriYonet ky=new KategoriYonet();
+          //  Kategori kategori= ky.kategoribul(id.Value);
 
-            if(kategori == null)
+          //  if(kategori == null)
+          //  {
+          //      return HttpNotFound();
+          //  }
+            List<Note> notlar=ny.listeleQueryable().Where(x=>x.Taslak==false && x.KategoriId==id).OrderByDescending(x=>x.DegistirmeTarihi).ToList();
+       
+            if (notlar == null)
             {
                 return HttpNotFound();
             }
-            return View("Index",kategori.notes);  //kategoribul da bulduğumuz id leri getiriyor sadece ve index view ine yönlendiriyoruz
+            return View(notlar);
+            /*return View("Index",kategori.notes.Where(x=>x.Taslak==false).OrderByDescending(x=>x.DegistirmeTarihi)); */ //kategoribul da bulduğumuz id leri getiriyor sadece ve index view ine yönlendiriyoruz
         }
         public ActionResult enbegenilenler()
         {
@@ -124,12 +132,14 @@ namespace MakaleWeb.Controllers
         {
             return View();
         }
+        [auth]
         public ActionResult profilgoster()
         {
             Kullanici kul=(Kullanici) Session["login"];
 
             return View(kul);
         }
+        [auth]
         public ActionResult profildegistir()
         {
           
@@ -161,7 +171,8 @@ namespace MakaleWeb.Controllers
             
             return View(kul);
         }
-		public ActionResult profilsil()
+        [auth]
+        public ActionResult profilsil()
 		{
             Kullanici kul=Session["login"] as Kullanici;
             BusinessLayer_Sonuc<Kullanici> sonuc=ky.kullaniciSil(kul.ID);

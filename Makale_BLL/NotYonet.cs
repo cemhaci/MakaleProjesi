@@ -26,6 +26,7 @@ namespace Makale_BLL
 		{
 			return rep_not.Find(x=>x.ID==id);
 		}
+	
 
 		public BusinessLayer_Sonuc<Note> NotKaydet(Note note)
 		{

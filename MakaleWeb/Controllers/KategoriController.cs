@@ -8,9 +8,11 @@ using System.Web;
 using System.Web.Mvc;
 using Makale_Entity;
 using Makale_BLL;
+using MakaleWeb.filters;
 
 namespace MakaleWeb.Controllers
 {
+    [auth]
     public class KategoriController : Controller
     {
         KategoriYonet ky=new KategoriYonet();

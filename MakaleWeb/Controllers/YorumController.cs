@@ -1,5 +1,6 @@
 ﻿using Makale_BLL;
 using Makale_Entity;
+using MakaleWeb.filters;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,6 +14,18 @@ namespace MakaleWeb.Controllers
         YorumYonet yy = new YorumYonet();
         NotYonet ny = new NotYonet();
         // GET: Yorum
+        public ActionResult notdevam(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(System.Net.HttpStatusCode.BadRequest);
+            }
+
+            Note not = ny.NotBul(id.Value);
+
+            return PartialView("_PartialPageNotdevam", not);
+        }
+        
         public ActionResult YorumGoster(int? id)
         {
             if (id == null)
@@ -25,6 +38,7 @@ namespace MakaleWeb.Controllers
             return PartialView("_PartialPageYorum", not.yorumlar);
         }
         [HttpPost]
+        [auth]
         public ActionResult edit (int? id,string text)
         {
             if(id== null)
@@ -46,6 +60,7 @@ namespace MakaleWeb.Controllers
             return Json(new { sonuc = false }, JsonRequestBehavior.AllowGet);
         } 
         [HttpPost]
+        [auth]
         public ActionResult delete(int id)
         {
             if (id == null)
@@ -57,6 +72,7 @@ namespace MakaleWeb.Controllers
             return Json(JsonRequestBehavior.AllowGet);
         }
         [HttpPost]
+        [auth]
         public ActionResult create(Yorum yorum,int? notid)  //jquery de text i gönderdik fakat yorum yazdık çünkü yorumun içinde text diye bir kolon var ve jquery yorumun içindeki texti tanıyor
         {
             ModelState.Remove("DegistirenKullanici");

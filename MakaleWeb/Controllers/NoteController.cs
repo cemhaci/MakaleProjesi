@@ -8,17 +8,19 @@ using System.Web;
 using System.Web.Mvc;
 using Makale_BLL;
 using Makale_Entity;
+using MakaleWeb.filters;
 using MakaleWeb.Models;
 
 namespace MakaleWeb.Controllers
 {
-   
+ 
     public class NoteController : Controller
     {
         KategoriYonet ky= new KategoriYonet();
         NotYonet ny=new NotYonet();
         LikeYonet ly = new LikeYonet();
         // GET: Note
+        [auth]
         public ActionResult Index()
         {
             var notes= ny.listeleQueryable().Include(n => n.kategori);
@@ -33,6 +35,7 @@ namespace MakaleWeb.Controllers
            
             return View(notes.ToList());
         }
+        
         public ActionResult begendiklerim()
 		{
            
@@ -45,7 +48,7 @@ namespace MakaleWeb.Controllers
             }
             return View("Index",notes.ToList());
         }
-
+        [auth]
         // GET: Note/Details/5
         public ActionResult Details(int? id)
         {
@@ -62,6 +65,7 @@ namespace MakaleWeb.Controllers
         }
 
         // GET: Note/Create
+        [auth]
         public ActionResult Create()
         {
             ViewBag.KategoriId = new SelectList(CacheHelper.kategoriler(), "ID", "Baslik");  //crate in viewinde dropdawn list var ve o dropdown listte kategorileri doldurmak için selectlist kullandık.  listele metodunun yerine cachelper ı kullandık
@@ -104,6 +108,7 @@ namespace MakaleWeb.Controllers
         }
 
         // GET: Note/Edit/5
+        [auth]
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -143,7 +148,7 @@ namespace MakaleWeb.Controllers
             }
          return View(note);
         }
-
+        [auth]
         // GET: Note/Delete/5
         public ActionResult Delete(int? id)
         {
@@ -194,7 +199,10 @@ namespace MakaleWeb.Controllers
         {
             int sonuc = 0;
             Kullanici kul = (Kullanici)Session["login"];
-
+            if(kul== null)
+            {
+                return Json(new { hata = true, res = -1});// beğenide sıfır gelebilir çakışmasın diye -1 veridk
+            }
             Note not = ny.NotBul(notid);
             Like begen = ly.BegeniBul(notid, kul.ID);
 
@@ -229,6 +237,8 @@ namespace MakaleWeb.Controllers
                     return Json(new { hata = false, res = not.BegeniSayisi });
                 }
             }
+          
+            
 
             return Json(new { hata = true, res = not.BegeniSayisi });
 

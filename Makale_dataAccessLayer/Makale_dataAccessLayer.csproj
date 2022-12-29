@@ -60,15 +60,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DatabaseContext.cs" />
-    <Compile Include="Migrations\202212131144408_InitialCreate.cs" />
-    <Compile Include="Migrations\202212131144408_InitialCreate.designer.cs">
-      <DependentUpon>202212131144408_InitialCreate.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202212190856539_kullaniciprofilresimekle.cs" />
-    <Compile Include="Migrations\202212190856539_kullaniciprofilresimekle.designer.cs">
-      <DependentUpon>202212190856539_kullaniciprofilresimekle.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="repository.cs" />
     <Compile Include="singleton.cs" />
@@ -87,14 +78,6 @@
       <Project>{FD4319D1-527F-4391-9A8E-A2A272E16137}</Project>
       <Name>Makale_Entity</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Migrations\202212131144408_InitialCreate.resx">
-      <DependentUpon>202212131144408_InitialCreate.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202212190856539_kullaniciprofilresimekle.resx">
-      <DependentUpon>202212190856539_kullaniciprofilresimekle.cs</DependentUpon>
-    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

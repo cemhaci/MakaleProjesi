@@ -46,13 +46,16 @@ $(function () {
         }).done(function (data) {
 
             if (data.hata) {
-                alert("Beğeni işlemi gerçekleşmedi")
+                if (data.res == -1) {
+                    window.location.href = '/home/login/';
+                }
+                alert("Beğeni işlemi gerçekleşmedi");
             }
             else {
                 like = !like;
                 btn.data("like", like);
                 spansayi.text(data.res);
-
+                 
                 spankalp.removeClass("glyphicon-heart-empty");
                 spankalp.removeClass("glyphicon-heart");
 

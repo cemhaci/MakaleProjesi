@@ -5,7 +5,16 @@
     ViewBag.Title = "Index";
 }
 
+@*<style>
+    .caticerik {
+        height: 20px;
+        overflow: hidden;
+    }
 
+    .devamyazi {
+        cursor: pointer;
+    }*@
+</style>
 <div class="container">
     <div class="row">
         <div class="col-md-3">
@@ -65,8 +74,8 @@
 
                                 @if (!string.IsNullOrEmpty(item.Text) && item.Text.Length > 80)
                                 {
-                                    <p>@item.Text.Substring(0, 80)</p> @*sıfırdan başlayıp 50. karaktere kadar olanı al*@
-                                    <a href="#" class="btn-btn btn-default btn-xs"><span class="glyphicon glyphicon-chevron-right"></span>devamı..</a>
+                                    <div>@item.Text.Substring(0, 80)</div> @*sıfırdan başlayıp 50. karaktere kadar olanı al*@
+                                    <div class="btn btn-default btn-xs" data-toggle="modal" data-target="#modal2" data-whatever="@item.ID" ><span class="glyphicon glyphicon-chevron-right"></span>devamı..</div>
                                 }
                                 else
                                 {
@@ -105,6 +114,25 @@
 }
 
 
-@BootstrapHelper.ModalPoppup("modal1","yorumlar")
+@BootstrapHelper.ModalPoppup("modal1", "yorumlar")
+@BootstrapHelper.ModalPoppup("modal2", "text")
 <script src="~/Scripts/likes.js/like.js"></script>
 <script src="~/Scripts/yorumlar.js/yorum.js"></script>
+<script>
+    $(function () {     //bu function ımız sayfa yklenriken çalışacaktır
+
+        $('#modal2').on('show.bs.modal', function (event) {
+            var button = $(event.relatedTarget) // Button that triggered the modal
+            var NotId = button.data('whatever')
+
+            //$('#modal1').on('show.bs.modal', function (e) {
+            //    console.log("test");
+            //    var button = $(e.relatedTarget);   //reletedtarget tıklanaan şeyin bilgisi demek.yani butonun
+            //    console.log("test");
+            //    var NotId = button.data("NotId");
+            //    console.log(NotId);
+            $('#modal2_body').load("/Yorum/notdevam/" + NotId);
+            console.log("test");
+        });
+    });
+</script>
