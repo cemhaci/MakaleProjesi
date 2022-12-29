@@ -187,5 +187,10 @@ namespace MakaleWeb.Controllers
             Session.Clear();
             return RedirectToAction("Index");
 		}
+        [exc]
+        public ActionResult ErrorPage() 
+            {
+            return View();
+            }
 	}
 }

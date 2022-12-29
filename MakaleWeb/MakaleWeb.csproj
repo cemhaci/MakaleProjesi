@@ -172,6 +172,8 @@
     <Compile Include="Controllers\NoteController.cs" />
     <Compile Include="Controllers\YorumController.cs" />
     <Compile Include="filters\auth.cs" />
+    <Compile Include="filters\authAdmin.cs" />
+    <Compile Include="filters\exc.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -222,6 +224,7 @@
     <Content Include="Views\Note\Index.cshtml" />
     <Content Include="Views\Shared\_PartialPageYorum.cshtml" />
     <Content Include="Views\Shared\_PartialPageNotdevam.cshtml" />
+    <Content Include="Views\home\ErrorPage.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

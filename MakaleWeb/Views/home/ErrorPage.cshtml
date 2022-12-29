@@ -1,0 +1,29 @@
+﻿
+@{
+    ViewBag.Title = "ErrorPage";
+}
+
+<div class="row">
+    <div class="col-md-8 col-md-offset-2">
+        @{ 
+            Exception ex=null;
+            if (TempData["error"] != null)
+            {
+                ex=TempData["error"]as Exception;
+            }
+
+
+}
+        <h1>hata oluştu</h1>
+        <p>lütfen sistem yöneticisiyle iletişime geçiniz</p>
+        <br />
+        @if (ex != null) 
+            { 
+               <b>hata detay:</b>@ex.Message
+        }
+    <br />
+        @BootstrapHelper.LinkButton("home/Index","anasayfaya git","","default")
+    </div>
+
+</div>
+

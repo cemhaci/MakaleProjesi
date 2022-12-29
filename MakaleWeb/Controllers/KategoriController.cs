@@ -13,6 +13,7 @@ using MakaleWeb.filters;
 namespace MakaleWeb.Controllers
 {
     [auth]
+    [authAdmin]
     public class KategoriController : Controller
     {
         KategoriYonet ky=new KategoriYonet();
