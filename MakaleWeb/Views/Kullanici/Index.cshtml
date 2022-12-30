@@ -88,10 +88,10 @@
         <td>
             @Html.DisplayFor(modelItem => item.DegistirenKullanici)
         </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.ID }) |
-            @Html.ActionLink("Details", "Details", new { id=item.ID }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.ID })
+        <td style="display:flex">
+            @BootstrapHelper.LinkButton("/Note/Edit/" + item.ID, "warning", "btn-sm", "Düzenle", "edit")
+            @BootstrapHelper.LinkButton("/Note/Details/" + item.ID, "info", "btn-sm", "Detaylar", "search")
+            @BootstrapHelper.LinkButton("/Note/Delete/" + item.ID, "danger", "btn-sm", "Sil", "trash")
         </td>
     </tr>
 }

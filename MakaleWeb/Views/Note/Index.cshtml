@@ -5,7 +5,29 @@
 }
 
 <h2>Index</h2>
+@*<style>
+    #tooltip #tooltiptext {
+        visibility: hidden;
+        width: 120px;
+        background-color: black;
+        color: #fff;
+        text-align: center;
+        border-radius: 6px;
+        padding: 5px 0;
+        /* Position the tooltip */
+        position: absolute;
+        z-index: 1;
+    }
+    #tooltip:hover #tooltiptext {
+        visibility: visible;
+    }
+    #tooltip {
+        position: relative;
+       /* display: inline-block;*/
+        border-bottom: 1px dotted black;
+    }*@
 
+@*</style>*@
 <p>
     @Html.ActionLink("Create New", "Create")
 </p>
@@ -73,12 +95,13 @@
             </td>
             <td style="display:flex">
                 <button class="btn btn-success btn-sm"
-                        data-toggle="modal" data-target="#modal1" data-notid="@item.Id">
-                    <span class="glyphicon glyphicon-comment"></span>
+                        data-toggle="modal" data-target="#modal1" data-whatever="@item.ID"><font title="Yorumlar"><span class="glyphicon glyphicon-comment"></span></font>
+                    
+                   
                 </button>
-                @BootstrapHelper.LinkButton("/Note/Edit/" + item.ID, "warning", "btn-sm", "edit", "")
-                @BootstrapHelper.LinkButton("/Note/Details/" + item.ID, "info", "btn-sm", "search", "")
-                @BootstrapHelper.LinkButton("/Note/Delete/" + item.ID, "danger", "btn-sm", "trash", "")
+                @BootstrapHelper.LinkButton("/Note/Edit/" + item.ID, "warning", "btn-sm", "Düzenle", "edit")
+                @BootstrapHelper.LinkButton("/Note/Details/" + item.ID, "info", "btn-sm", "Detaylar", "search")
+                @BootstrapHelper.LinkButton("/Note/Delete/" + item.ID, "danger", "btn-sm", "Sil", "trash")
             </td>
         </tr>
     }

@@ -76,7 +76,7 @@ namespace MakaleWeb.Controllers
                 }
                 Session["login"]=sonuc.nesne;
 
-                uygulama.kullaniciAd=model.KullaniciAd;
+                uygulama.kullaniciAd=model.KullaniciAd;  //değiştiren kullanıcıya burada atıyor
                return RedirectToAction("Index");
             }
             return View(model);

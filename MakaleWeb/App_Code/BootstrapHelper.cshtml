@@ -3,9 +3,9 @@
     <a href="@url" id="@id" name="@name" class="btn btn-@color @css"><span class="glyphicon glyphicon-@icon"></span></a>
 }
 
-@helper LinkButton(string url = "", string color = "", string css = "", string icon = "")
+@helper LinkButton(string url = "", string color = "", string css = "",string font="", string icon = "")
 {
-    <a href="@url" class="btn btn-@color @css"><span class="glyphicon glyphicon-@icon"></span></a>
+<font title="@font"><a href="@url" class="btn btn-@color @css"><span class="glyphicon glyphicon-@icon"></span></a></font>
 }
 @*aynı isimde ama parametreleri farklı birden çok helper yazabiliriz*@
 
@@ -16,8 +16,19 @@
 
 @helper ModalPoppup(string id,string title)
 {
-    <div class="modal fade" id="@id" name="@id" tabindex="-1" role="dialog">
-        <div class="modal-dialog" role="document">
+    <style>
+        #shadow {
+            margin: auto;
+            margin-top: 50px;
+            box-shadow: 20px 20px 50px grey;
+        }
+        .background {
+            background: rgb(21 22 62 / 0.59);
+        }
+        
+    </style>
+    <div class="modal fade background" id="@id" name="@id" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document" id="shadow">
             <div class="modal-content">
                 <div class="modal-header" id="@(id+"_header")">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>

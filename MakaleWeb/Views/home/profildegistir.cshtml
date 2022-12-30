@@ -10,9 +10,9 @@
         <hr />
     </div>
         <div class="row" style="margin:auto">
-            @*post işlemimzde resim dosyasını göndermek için bunu yazdık*@
+            @*post işlemimzde resim dosyasını göndermek için bunu yazdık. methodumuz post bunun içinde post olacağından dolayı.enctype ı da bir png dosyası gönderilceğinden dolayı bunu yazdık*@
 
-            @using (Html.BeginForm("profildegistir", "home", FormMethod.Post, new { enctype = "multipart/form-data" }))
+            @using (Html.BeginForm("profildegistir", "home", FormMethod.Post, new { enctype = "multipart/form-data" })) 
 
 
             {

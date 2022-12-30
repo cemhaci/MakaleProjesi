@@ -44,7 +44,7 @@ namespace Makale_dataAccessLayer
         public int Insert(T nesne) //int dememizin sebebi sql de 1 row effected diye yazmasından dolayı 1 başarılı ekleme tarzı döndürdüğünden dolayı. biz bunu if ile eklenip eklenmediğini 1 den büyük küçük şeklinde kontrol ettirebiliriz
         {
             _objectset.Add(nesne);  //kullanıcı veya kategori hangi db seti çağırırsak onu ekliycek
-            EntitiesBase obj= nesne as EntitiesBase;
+            EntitiesBase obj= nesne as EntitiesBase; //sadece like entitybase den kalıtılmamış ve bu yüzden kontrol ediyoruz gelen nesne bir entitybase dir diyerek.
             DateTime time=DateTime.Now;
             if(nesne is EntitiesBase)      //bunlarıher insert ettiğimizde eklemek zorundayız çünkü requried bilgi bunlar ve her intert bilgi eklediğimizden sürekli yazmamıza gerek kalmayacak 
             {

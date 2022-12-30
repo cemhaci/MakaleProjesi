@@ -63,14 +63,21 @@
                                 Dropdown
                           </a>
                           <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                              <a class="dropdown-item" href="#">Action</a>
-                              <a class="dropdown-item" href="#">Another action</a>
-                              <div class="dropdown-divider"></div>
-                              <a class="dropdown-item" href="#">Something else here</a>
+                              <li>
+                                  <a class="dropdown-item" href="/Note/Index">Notlarım</a>
+                              </li>
+                              <li>
+                                  <a class="dropdown-item" href="/Note/begendiklerim">Beğendiklerim</a>
+                              </li>
+                              <li role="separator" class="divider"></li>
+                              <li>
+                                  <a class="dropdown-item" href="#">Something else here</a>
+                              </li>
                               @if (kul.Admin)
                               {
-                                  <a class="dropdown-item" href="#">Action</a>
-                                  <a class="dropdown-item" href="#">Another action</a>
+                          <li> <a class="dropdown-item" href="/Kullanici/Index">Kullanıcı İşlemleri</a></li>
+                              <li><a class="dropdown-item" href="/Kategori/Index">Kategori İşlmeleri</a></li>
+
                               }
                           </ul>
                        </li>
